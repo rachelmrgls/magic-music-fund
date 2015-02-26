@@ -1,2 +1,2 @@
 # magic-music-fund
-Crowdfunding for lawnparties events at eating clubs (at Princeton)
+Crowdfunding for lawnpartie$ events at eating clubs (at Princeton)
