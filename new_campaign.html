@@ -83,7 +83,7 @@
       </div>
       <div class="form-group">
         <label for="total_amt">Total amound needed for artist</label>
-        <input type="number" class="form-control" id="total_ampt" placeholder="$" required>
+        <input type="number" class="form-control" id="total_amt" placeholder="$" required>
       </div>
       <div class="form-group">
         <label for="club_amt">Amount the Club has already</label>
@@ -111,19 +111,15 @@
        </div>
       -->
 
-
-  <button type="submit" class="btn btn-success pull-right">Submit</button>
+  <button type="submit" onclick="myFunction()" class="btn btn-success pull-right">Submit</button>
   
-
 </form>
 
 <br>
 <br>
 <br>
-
 	
       <!-- /END THE FORM -->
-
 
       <!-- FOOTER -->
       <footer>
@@ -138,6 +134,17 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/objects/campaign.js"></script>
+    <script>
+      function myFunction() {
+        var campaign = new Campaign("Cannon");
+        campaign.name = document.getElementById("camp_name").innerHTML;
+        campaign.goalAmnt = document.getElementById("total_amt").innerHTML;
+        campaign.startAmnt = document.getElementById("club_amt").innerHTML;
+        campaign.picture = document.getElementById("pic").innerHTML;
+        console.log(campaign);
+      }
+    </script>
     <script src="./index_files/jquery.min.js"></script>
     <script src="./index_files/bootstrap.min.js"></script>
     <script src="./index_files/docs.min.js"></script>
