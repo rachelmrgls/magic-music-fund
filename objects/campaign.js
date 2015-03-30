@@ -10,12 +10,17 @@ function Campaign( clubName ) {
     this.enddate = "";
     this.picture = "";
     this.description = "";
+    this.pledges = [];
     //if (allcampaigns == undefined) {
       //  var allcampaigns = [];
     //}
     //allcampaigns.append(this);
 };
 
-Campaign.prototype.setName = function( newName ) {
-	this.name = newName;
+Campaign.prototype.sumPledges = function( ) {
+	var sum = 0;
+    for (var i = 0; i < pledges.length; i++) {
+        sum = sum + pledges[i].amount;
+    }
+    return sum;
 };

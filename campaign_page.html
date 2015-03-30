@@ -16,7 +16,20 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="./index_files/ie-emulation-modes-warning.js"></script>
-
+    <script src="./objects/campaign.js"></script>
+    <script src="./objects/pledge.js"></script>
+    <script type="text/javascript">
+      function myFunction() {
+        var pledge = new Pledge();
+        pledge.student = "rachelbm";
+        pledge.campaign = "camapaignID";
+        pledge.amount = document.pledge_form.pledge_amt.value;
+        console.log(pledge);
+        // add pledge to the campaign
+        // add pledge to the student
+        //document.location.href="campaign_page.html";
+      };
+    </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -115,13 +128,13 @@
                   <br>
                   <br>
 
-                 <form action="campaign_page.html" method="POST">
+                 <form name="pledge_form">
                   <div class="form-group pull-down">
                    <label for="pledge_amt">Excited? Make a Pledge!</label>
                     <input type="number" class="form-control" id="pledge_amt" placeholder="$" required>
-                   </div>
-     
-                <button type="submit" class="btn btn-success pull-right">Pledge Now!</button>
+                  </div>
+     			</form>
+                <input type="button" onclick="myFunction()" class="btn btn-success pull-right" value="Pledge Now!">
   
                </div>
 
