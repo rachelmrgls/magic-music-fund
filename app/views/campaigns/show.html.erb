@@ -1,0 +1,69 @@
+<% if flash[:notice] %>
+  <p id="notice" class="alert alert-success" ><%= notice %></p>
+<% end %>
+<% if flash[:alert] %>
+  <p id="alert" class="alert alert-danger" ><%= alert %></p>
+<% end %>
+<div class="jumbotron transparent">
+  <div class="row">
+    <h1 class="title" style="margin-top: 0px;">Help bring <strong><%= @campaign.name %></strong> to <%= @campaign.club.name %>!</h1>
+    <div align="center">
+      <%= image_tag @campaign.picture.url if @campaign.picture? %> 
+    </div>
+    <div class="progress navbar-nav" style="width:100%" align="center">
+        <% if @campaign.goalMoney - @campaign.clubMoney == 0 %> 
+          <% @fraction = 100%>
+        <%end%>
+        <% if @campaign.goalMoney - @campaign.clubMoney != 0 %> 
+          <% @fraction = capture do %><%=[100*@campaign.currentMoney/(@campaign.goalMoney - @campaign.clubMoney), 100].min%><%end%>
+        <%end%>
+        <!-- <div align="right" style="z-index: 10;">$<%= @campaign.currentMoney %> of $<%= @campaign.goalMoney - @campaign.clubMoney%> raised </div> -->
+        <div align="center" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= @fraction %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= @fraction %>%"><%= @fraction%>% Complete</div>    
+      </div>
+    <div class="col-md-6 nav navbar-nav mer" style="width:100%" align="center">
+       <div align="center">
+        <% if ((@campaign.end_date - @campaign.start_date).to_i == 1) %>
+          <%= (@campaign.end_date - @campaign.start_date).to_i %> day left in this campaign <strong>●</strong> $<%= @campaign.currentMoney %></strong> raised of $<%= @campaign.goalMoney.to_i - @campaign.clubMoney.to_i %> goal
+          <%end%>
+        <% if ((@campaign.end_date - @campaign.start_date).to_i != 1) %><%= (@campaign.end_date - @campaign.start_date).to_i %> days left in this campaign <strong>●</strong> $<%= @campaign.currentMoney %></strong> raised of $<%= @campaign.goalMoney.to_i - @campaign.clubMoney.to_i %> goal
+        <%end%>
+      </div>
+       <br>
+       <div align="center">
+         <%= @campaign.description %>
+        </div> 
+        <br>
+        <% if !campaign_completed?(@campaign)%>
+        <div align="center" style="padding-top: 15px;" valign="bottom">
+          <%= form_for(:pledge, url:pledges_path) do |f| %>
+            <article style="margin-bottom: 3px;">
+              <%= f.label :amount, "Pledge any amount, $1 or more:" %><br>
+              <%= f.number_field :amount, min: 1 %>
+              <%= hidden_field_tag 'campaign_id', @campaign.id  %>
+            </article>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" 
+                    data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                    data-description="Charge will be pending."
+                    data-label="Pledge To Campaign"
+                    data-panel-label="Pledge Now" 
+                    data-allow-remember-me=false
+                    data-email="<%=current_student.netid%>@princeton.edu"
+                    data-name="Pledge to Campaign"
+                    data-amount=""></script>
+          <% end %>
+        </div>
+      </div>
+      <%end%>                  
+    </div>
+    </div>
+    <div class="row">  
+    <div class="col-md-6"></div>
+    <div class="col-md-6" style="height:100%">  
+    <br>
+  </div>
+<br>
+
+
+</div> 
+
+

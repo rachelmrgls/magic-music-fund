@@ -1,0 +1,40 @@
+<div class="well transparent">
+  <div class="row featurette">
+    <h1 class="brand-title">Edit Club</h1>
+  </div>
+</div>
+
+<div class="well transparent" >
+  <div class="row">
+    <div class="col-md-1"></div>
+      <div class="col-md-1"></div>
+        <div class="col-md-8 navbar-nav" style="font-size: 1em;">
+          <h1>Update your bank info</h1>
+            <form action = "" method="POST" id="inst-form">    
+            <div class="form-row">
+            <label>
+              <span>Bank Location</span>
+              <select data-stripe="country">
+                <option value="US">United States</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>
+              <span>Routing Number</span>
+              <input type="text" size="9" data-stripe="routingNumber"/>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>
+              <span>Account Number</span>
+            <input type="text" size="17" data-stripe="accountNumber"/>
+          </label>
+        </div>
+        <button class="btn-primary" type="submit">Make Recipient!</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<tr id="pledge-<%= pledge.id %>" class="<%=status?(pledge).downcase%>">
+  <td class="campaign"><%= link_to pledge.campaign.name, pledge.campaign %></td>
+  <td class="amount">$<%= pledge.amount %></td>
+  <td class="status"><%=status?(pledge)%></td>
+  <td class="timestamp">Posted <%= time_ago_in_words(pledge.created_at) %> ago.</td>
+</tr>

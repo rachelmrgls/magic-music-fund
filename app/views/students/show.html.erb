@@ -1,0 +1,35 @@
+<div class="well transparent">
+  <div class="row featurette">
+    <h1 class="brand-title">Pledge History</h1>
+  </div>
+</div>
+
+<div class="well transparent">
+  <div class="row featurette ">
+    <p>
+      <% if @student.pledges.any? %>
+          <div class="row navbar-nav table-nav">
+            <div class="col-md-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Campaign</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= render @pledges %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <%= will_paginate @pledges %>
+        <% else %>
+          <p class="navbar-nav">no pledges yet!</p>
+        <% end %>
+    </p>
+  </div>
+</div>
+

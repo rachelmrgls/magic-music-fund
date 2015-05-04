@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  netid: MyString
+  isAdmin: 1
+  clubAffil: MyString
+  password: MyString
+  tiltAccNum: 1
+  pledges: 1
+
+two:
+  name: MyString
+  netid: MyString
+  isAdmin: 1
+  clubAffil: MyString
+  password: MyString
+  tiltAccNum: 1
+  pledges: 1

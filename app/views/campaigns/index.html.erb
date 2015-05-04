@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<br>
+    <% @campaigns.each do |campaign| %>
+      <% if (!campaign_completed?(campaign)) && ((campaign.end_date - campaign.start_date).to_i > 0) %>
+        <div class="well transparent" >
+          <div class="row featurette">
+            <div class="col-md-6" style="float: left;">
+              <div class="image">
+                <%= link_to campaign_path(campaign) do %>
+                  <%= image_tag campaign.picture.url if campaign.picture? %>
+                <% end %>
+              </div>
+              <p class="title" style="margin-top: 10px;">
+                <%= link_to "Pledge", campaign_path(campaign), class: "btn btn-lg btn-primary pledge" %>&nbsp;<strong><%=campaign.name %></strong> at <strong><%=campaign.club.name %></strong>
+              </p>
+            </div>
+            <div class="col-md-6" style="float: right;">
+              <div class="progress" style="">
+                <% if campaign.goalMoney - campaign.clubMoney == 0 %> 
+                  <% @fraction = 100%>
+                <%end%>
+                <% if campaign.goalMoney - campaign.clubMoney != 0 %> 
+                  <% @fraction = capture do %><%=[100*campaign.currentMoney/(campaign.goalMoney - campaign.clubMoney), 100].min%><%end%>
+                <%end%>
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= @fraction %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= @fraction %>%"><%= @fraction%>% Complete</div>
+              </div>
+              <div>
+              <h3 class="brand-smaller"><strong>$<%= campaign.currentMoney %></strong> raised of $<%= campaign.goalMoney.to_i - campaign.clubMoney.to_i %> goal</h3>
+                <% if (campaign.pledges.count == 1) %>
+                  <h3 class="brand-smaller"><strong><%= campaign.pledges.count %></strong> pledge</h3>
+                <%end%>
+                <% if (campaign.pledges.count > 1) %>
+                  <h3 class="brand-smaller"><strong><%= campaign.pledges.count %></strong> pledges</h3>
+                <%end%>
+                <% if ((campaign.end_date - campaign.start_date).to_i == 1) %>
+                  <h3 class="brand-smaller"><strong><%= (campaign.end_date - campaign.start_date).to_i %></strong> day to go!</h3>
+                <%end%>
+                <% if ((campaign.end_date - campaign.start_date).to_i != 1) %>
+                  <h3 class="brand-smaller"><strong><%= (campaign.end_date - campaign.start_date).to_i %></strong> days to go!</h3>
+                <%end%>
+              </div>
+            </div>
+          </div>  
+        </div>
+      <%end%>
+    <%end%>
+<br>

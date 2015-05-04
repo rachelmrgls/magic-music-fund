@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<div class="center jumbotron">
+  <h1>All Students</h1>
+</div>
+<div class="row">
+  <div class="col-md-12">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>NetID</th>
+        <th>Tilt Account Number</th>
+        <th>Pledges</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td><%= link_to student.netid, student %></td>
+          <td><%= student.tiltAccNum %></td>
+          <td><%= student.pledges.count %></td>
+          <td><%= link_to 'Edit', edit_student_path(student) %></td>
+          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<br>
+
+<%= link_to 'New Student', new_student_path %>

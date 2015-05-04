@@ -1,0 +1,97 @@
+
+<p id="notice"><%= notice %></p>
+<!-- <div class="center jumbotron">
+  <h1 style="text-transform: normal;">Welcome, <%= @club.name %></h1>
+</div> -->
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+  <!-- The required Stripe lib -->
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+  <!-- jQuery is used only for this example; it isn't required to use Stripe -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    // This identifies your website in the createToken call below
+    //blanking my test key out just for stackoverflow 
+    Stripe.setPublishableKey('pk_test_b3qBzfxOU5EdIEEca8anwoQv');
+    var stripeResponseHandler = function(status, response) {
+        var $form = $('#inst-form');
+        if (response.error)
+        {
+          alert("Error");
+          // Not sure how to get these errors.
+          $form.find('button').prop('disabled', false);
+        }
+        else
+        {
+          var token = response.id;
+          // I WANT TO ROUTE TO RUBY HERE TO PUSH TO SERVER NEW TOKEN + UPDATE RECIPIENT BY ADDING BANK
+          $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+          console.log(response);
+        }
+      };
+
+  // Now the handler is done, lets use it when the form is submitted.
+  // On form submission execute:
+  jQuery(function($) {
+    $('#inst-form').submit(function(event) {
+      // Get the form object.
+      var $form = $(this);
+      // Disable the submit button to prevent repeated clicks
+      $form.find('button').prop('disabled', true);
+      // Create a token with Stripe
+      Stripe.bankAccount.createToken($form, stripeResponseHandler);
+      // Prevent the form from submitting with the default action
+      return false;
+    });
+  });
+  </script>
+</head>
+<body>
+
+<div class="well transparent">
+  <div class="row featurette">
+  <h1 class="brand-title">Welcome, <%= @club.name %></h1>
+    </div>
+    </div>
+  <% @club.campaigns.each do |campaign| %>
+        <div class="well transparent">
+          <div class="row featurette">
+            <div class="col-md-6 navbar-nav">
+              <div class="row">
+                <div colspan="4">
+                  <h1 class="brand-title" style="font-size: 3em;"><%= campaign.name %></h1>
+                </div>
+              </div>
+              <br>
+              <p>Goal: $<%= campaign.goalMoney.to_i - campaign.clubMoney.to_i %></p>
+          <p>Raised: $<%= campaign.currentMoney %></p>
+              <div class="progress" style="width:80%">
+                <% @fraction = capture do %><%=[100*campaign.currentMoney/(campaign.goalMoney.to_i - campaign.clubMoney.to_i), 100].min%><%end%>
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= @fraction %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= @fraction %>%"><%= @fraction%>% Complete</div>
+              </div>
+              <p>Start Date: <%= campaign.start_date %>&nbsp;&nbsp;&nbsp;End Date: <%= campaign.end_date %></p>
+              <p><% if ((campaign.end_date - campaign.start_date).to_i == 1) %>
+                <%= (campaign.end_date - campaign.start_date).to_i %> day left in this campaign
+              <%end%>
+              <% if ((campaign.end_date - campaign.start_date).to_i != 1) %><%= (campaign.end_date - campaign.start_date).to_i %> days left in this campaign
+              <%end%></p>
+              <!-- <p><%#= (campaign.end_date - campaign.start_date).to_i %> day(s) left in campaign</p> -->
+              <p>Description: <%= campaign.description %></p>
+              <p>Pledges: <%= campaign.pledges.count %></p>
+              <% if (!campaign_completed?(campaign)) && ((campaign.end_date - campaign.start_date).to_i > 0) %>
+                <p><%= link_to 'Edit', edit_campaign_path(campaign), class:"btn btn-default" %>&nbsp;&nbsp;<%= link_to 'Destroy', campaign, class:"btn btn-default", method: :delete, data: { confirm: 'Are you sure?' } %></p>
+              <%end%>
+            </div>
+            <div class="col-md-6">
+              <%= image_tag campaign.picture.url if campaign.picture?%>
+            </div>
+
+            <%= line_chart campaign.pledges.group_by_hour(:created_at).count, title:"Hi"%>
+          </div>
+      </div>
+  <%end%>
+</body>
