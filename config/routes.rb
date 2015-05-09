@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get 'clubs/new'
-
   get 'club_session/new'
 
   get 'sessions/club'
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'sessions#new'
+  root 'campaigns#index'
   get    'home'    => 'campaigns#index'
   get    'signup'  => 'students#new'
   get    'student_login'   => 'sessions#new'

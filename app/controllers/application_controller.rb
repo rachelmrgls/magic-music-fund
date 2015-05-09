@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     def logged_in_student
       unless student_logged_in?
         store_location
-        flash[:danger] = "Please log in."
+        #flash[:danger] = "Please log in."
         redirect_to student_login_url
       end
     end

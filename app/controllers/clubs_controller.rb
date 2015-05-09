@@ -1,4 +1,5 @@
-class ClubsController < ApplicationController
+class ClubsController < ApplicationController 
+  include ClubsHelper 
   before_action :logged_in_club, only: [:show, :index, :edit, :update, :destroy]
   before_action :correct_club,   only: [:show, :edit, :update]
 
@@ -8,6 +9,33 @@ class ClubsController < ApplicationController
 
   def new
   	@club = Club.new
+  end
+
+  def update
+    if (params[:update_id] .eql? "bank")
+      Stripe.api_key = 'sk_test_6fMKKvnEUkQIMYsCSj2WlqHb'
+      bank = Stripe::Token.create(
+        :bank_account => {
+        :country => "US",
+        :routing_number => params[:routingNum],
+        :account_number => params[:accountNum], 
+        },
+      )
+      rp = Stripe::Recipient.retrieve(current_club.recipient_id)
+      rp.bank_account = bank["id"]
+      rp.save
+      current_club.update_attribute :has_bank, 1
+      redirect_to current_club
+    # elsif (params[:update_id] .eql? "password")
+    #   if (params[:old_password] == current_club.password)
+    #     puts "~~~~~~~~~~~$$$$$$$$$~~~~~~~~~~~~~~~~"
+    #     puts params[:new_password]
+    #     current_club.update_attribute :password, params[:new_password]
+    #     redirect_to current_club
+    #   else
+    #     flash[:notice] = "Current password is invalid"
+    #   end
+    end 
   end
 
   # GET /clubs/1/edit
@@ -20,25 +48,20 @@ class ClubsController < ApplicationController
   end
 
   def create
-    @club = Club.new(club_params)    # Not the final implementation!
+    
+    if (current_club == nil)
+      @club = Club.new(club_params)    # Not the final implementation!
 
-    #respond_to do |format|
-    #  if @club.save
-    #    format.html { redirect_to login_url, notice: 'Club was successfully created.' }
-    #    format.json { render :show, status: :created, location: @club }
-    #  else
-    #    format.html { render :new }
-    #    format.json { render json: @club.errors, status: :unprocessable_entity }
-    #  end
-    #end
-
-    if @club.save
-      club_log_in @club
-      # Handle a successful save.
-      flash[:success] = "Welcome to your club page!"
-      redirect_to @club
-    else
-      render 'new'
+      if @club.save
+        club_log_in @club
+        # Handle a successful save.
+        flash[:success] = "Welcome to your club page!"
+        redirect_to @club
+      else
+        render 'new'
+      end
+    else 
+      self.update
     end
   end
 
@@ -50,7 +73,7 @@ class ClubsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def club_params
-      params.require(:club).permit(:name, :email, :password, :tiltAccNum, :recipient_id)
+      params.require(:club).permit(:name, :email, :password, :routingNum, :accountNum, :recipient_id, :has_bank)
     end
 
     # Confirms the correct club.

@@ -5,17 +5,17 @@
       <% if (!campaign_completed?(campaign)) && ((campaign.end_date - campaign.start_date).to_i > 0) %>
         <div class="well transparent" >
           <div class="row featurette">
-            <div class="col-md-6" style="float: left;">
+            <div class="col-md-6 navbar-nav" style="float: left;">
               <div class="image">
                 <%= link_to campaign_path(campaign) do %>
-                  <%= image_tag campaign.picture.url if campaign.picture? %>
+                  <%= image_tag campaign.picture.url, class:"img-responsive" if campaign.picture? %>
                 <% end %>
               </div>
               <p class="title" style="margin-top: 10px;">
                 <%= link_to "Pledge", campaign_path(campaign), class: "btn btn-lg btn-primary pledge" %>&nbsp;<strong><%=campaign.name %></strong> at <strong><%=campaign.club.name %></strong>
               </p>
             </div>
-            <div class="col-md-6" style="float: right;">
+            <div class="col-md-6 navbar-nav" style="float: right;">
               <div class="progress" style="">
                 <% if campaign.goalMoney - campaign.clubMoney == 0 %> 
                   <% @fraction = 100%>

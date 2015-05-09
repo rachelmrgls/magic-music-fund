@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501145540) do
+ActiveRecord::Schema.define(version: 20150505202805) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150501145540) do
     t.string   "name"
     t.integer  "goalMoney"
     t.integer  "clubMoney"
-    t.integer  "currentMoney"
+    t.integer  "currentMoney", default: 0
     t.date     "start_date"
     t.date     "end_date"
     t.text     "description"
@@ -41,20 +41,20 @@ ActiveRecord::Schema.define(version: 20150501145540) do
     t.string   "name"
     t.string   "email"
     t.string   "password"
-    t.integer  "tiltAccNum"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "recipient_id"
+    t.integer  "has_bank",        default: 0
   end
 
   create_table "pledges", force: :cascade do |t|
-    t.integer  "amount"
-    t.integer  "status"
+    t.float    "amount"
+    t.integer  "status",           default: 1
     t.integer  "student_id"
     t.integer  "campaign_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "stripe_charge_id"
   end
 
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20150501145540) do
 
   create_table "students", force: :cascade do |t|
     t.string   "netid"
-    t.integer  "tiltAccNum"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

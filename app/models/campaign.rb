@@ -31,6 +31,11 @@ class Campaign < ActiveRecord::Base
 	      # if (end_date.to_time.to_i - start_date.to_time.to_i) > 7
 	      	errors.add(:end_date, "cannot be more than 7 days later than start date")
 	      end
+
+	      if (start_date < Date.today)
+	      	errors.add(:start_date, "has already passed")
+	      end
+
 	    end
 
 end

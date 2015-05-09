@@ -3,6 +3,13 @@ module SessionsHelper
 		session[:student_id] = student.id
 	end
 
+	  # Remembers a user in a persistent session.
+  	# def remember(student)
+	  #   student.remember
+	  #   cookies.permanent.signed[:student_id] = student.id
+	  #   cookies.permanent[:remember_token] = student.remember_token
+	  # end
+
 	def current_student
 		@current_student ||= Student.find_by(id: session[:student_id])
 	end

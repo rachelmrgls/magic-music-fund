@@ -1,8 +1,8 @@
-<div class="well transparent">
-  <div class="row featurette">
-  	<h1 class="brand-title">New Campaign</h1>
-  </div>
+<div class="center jumbotron brand">
+  <h1>New Campaign</h1>
 </div>
-<%= render 'form' %>
-
-<%= link_to 'Back', campaigns_path %>
+<% if has_bank_account?(current_club) %> 
+	<%= render 'form' %>
+<% else %> 
+	<%= link_to "Add Bank Account", edit_club_path(current_club), class: "btn btn-lg btn-primary" %>
+<% end %>

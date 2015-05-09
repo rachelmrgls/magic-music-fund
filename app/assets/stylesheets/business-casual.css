@@ -52,6 +52,7 @@ hr {
 
 
 .navbar-nav {
+    font-family: verdana, arial, helvetica, sans-serif;
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 3px;
@@ -141,6 +142,7 @@ hr {
     font-weight: 700;
     line-height: normal;
     color: #fff;
+    text-transform: none;
 }
 
 footer {

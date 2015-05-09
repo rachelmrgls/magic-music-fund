@@ -1,4 +1,5 @@
 class CampaignsController < ApplicationController
+  include ClubsHelper
   before_action :set_campaign, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_student, only: [:index, :edit, :update, :destroy]
   before_action :logged_in_club, only: [:new]
@@ -32,7 +33,6 @@ class CampaignsController < ApplicationController
     @campaign = current_club.campaigns.build(campaign_params)
 
     respond_to do |format|
-      @campaign.currentMoney = 0
       @campaign.pledges = []
       if @campaign.save
         format.html { redirect_to @campaign, notice: 'Campaign was successfully created.' }

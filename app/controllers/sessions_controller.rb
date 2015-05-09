@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
     if student
       # Log the user in and redirect to the user's show page.
       student_log_in student
+      # remember student
       redirect_to home_url
     else
       # Create new student account.
@@ -27,8 +28,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    student_log_out
-    club_log_out
+    club_log_out if club_logged_in?
+    student_log_out if student_logged_in?
     redirect_to student_login_url
   end
 

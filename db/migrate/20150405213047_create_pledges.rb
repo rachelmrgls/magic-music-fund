@@ -1,8 +1,8 @@
 class CreatePledges < ActiveRecord::Migration
   def change
     create_table :pledges do |t|
-      t.integer :amount
-      t.integer :status
+      t.float :amount
+      t.integer :status, :default => 1
       t.references :student, index: true
       t.references :campaign, index: true
 

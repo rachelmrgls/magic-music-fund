@@ -4,6 +4,9 @@ class ClubSessionController < ApplicationController
 
   def create
     club = Club.find_by(email: params[:club_session][:email].downcase)
+    # puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    # puts club.password
+    puts params[:club_session][:password]
     if club && club.authenticate(params[:club_session][:password])
       # Log the user in and redirect to the user's show page.
       club_log_in club

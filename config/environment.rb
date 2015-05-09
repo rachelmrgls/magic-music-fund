@@ -15,6 +15,6 @@ CASClient::Frameworks::Rails::Filter.configure(
     #:extra_attributes_session_key => :cas_extra_attributes,
    	#:enable_single_sign_out => true,
     #:authenticate_on_every_request => true,
-	:service_url => "http://princeton-fanfare.herokuapp.com"
     #:service_url => "http://localhost:3000"
+   	:service_url => "http://princeton-fanfare.herokuapp.com"
 )

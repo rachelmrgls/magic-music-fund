@@ -20,10 +20,6 @@ class StudentsController < ApplicationController
     @student = Student.new
   end
 
-  # GET /students/1/edit
-  def edit
-  end
-
   # POST /students
   # POST /students.json
   def create
@@ -40,6 +36,11 @@ class StudentsController < ApplicationController
     end
   end
 
+  # GET /students/1/edit
+  def edit
+  end
+
+  
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
@@ -72,7 +73,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit( :email, :tiltAccNum)
+      params.require(:student).permit( :email, :remember_digest)
     end
 
     # Confirms the correct student.

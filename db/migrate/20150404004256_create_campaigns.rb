@@ -4,7 +4,7 @@ class CreateCampaigns < ActiveRecord::Migration
       t.string :name
       t.integer :goalMoney
       t.integer :clubMoney
-      t.integer :currentMoney
+      t.integer :currentMoney, :default => 0
       t.date :start
       t.date :end
       t.text :description

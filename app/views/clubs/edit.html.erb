@@ -1,40 +1,41 @@
+<div class="center jumbotron brand">
+  <h1>Update Club Account</h1>
+</div>
+
 <div class="well transparent">
   <div class="row featurette">
-    <h1 class="brand-title">Edit Club</h1>
-  </div>
-</div>
-
-<div class="well transparent" >
-  <div class="row">
     <div class="col-md-1"></div>
       <div class="col-md-1"></div>
-        <div class="col-md-8 navbar-nav" style="font-size: 1em;">
-          <h1>Update your bank info</h1>
-            <form action = "" method="POST" id="inst-form">    
-            <div class="form-row">
-            <label>
-              <span>Bank Location</span>
-              <select data-stripe="country">
-                <option value="US">United States</option>
-              </select>
-            </label>
-          </div>
-
-          <div class="form-row">
-            <label>
-              <span>Routing Number</span>
-              <input type="text" size="9" data-stripe="routingNumber"/>
-            </label>
-          </div>
-
-          <div class="form-row">
-            <label>
-              <span>Account Number</span>
-            <input type="text" size="17" data-stripe="accountNumber"/>
-          </label>
+      <div class="col-md-8 navbar-nav" style="font-size: 1em;">
+      <% if has_bank_account?(current_club) %>
+        <h1 class="brand-title">Update Bank Account</h1>
+      <% else %> 
+        <h1 class="brand-title">Add Bank Account</h1>
+      <% end %> 
+      <br>
+      <%= form_tag clubs_path(:id), :html => { :class => "form-horizontal" } do %>
+        <div class="field">
+          <%= label_tag :routingNum, "Routing Number" %><br>
+          <%= number_field_tag :routingNum, nil, class: 'form-control'%> <br>
         </div>
-        <button class="btn-primary" type="submit">Make Recipient!</button>
-      </form>
-    </div>
+        <div class="field">
+          <label for="accountNum">Account Number</label> <br>
+          <%= number_field_tag :accountNum, nil, class: 'form-control'  %> <br>
+        </div>
+        <%= hidden_field_tag :update_id, "bank" %> 
+        <div class="form-actions">
+          <% if has_bank_account?(current_club) %>
+            <%= submit_tag "Edit Bank Account", class: "btn btn-primary" %>
+          <% else %> 
+            <%= submit_tag "Add Bank Account", class: "btn btn-primary" %>
+            <!-- redirect to new campaign!! -->
+          <% end %> 
+        </div>
+        <% end %>
+      </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-1"></div>
   </div>
 </div>
+
+

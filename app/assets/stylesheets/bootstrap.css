@@ -245,6 +245,11 @@ th {
   .navbar {
     display: none;
   }
+  .fanfare-logo {
+    width: 100px;
+    float: left;
+    left: 0;
+  }
   .btn > .caret,
   .dropup > .btn > .caret {
     border-top-color: #000 !important;
@@ -4253,6 +4258,16 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding-bottom: 10px;
   line-height: 20px;
 }
+
+.navbar-center {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+  }
+
 @media (max-width: 767px) {
   .navbar-nav .open .dropdown-menu {
     position: static;
